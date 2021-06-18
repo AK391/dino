@@ -82,7 +82,7 @@ def display_instances(image, mask, fname="test", figsize=(5, 5), blur=False, con
 
 def visualize(image):
     image = image.convert("RGB")
-    feature_extractor = ViTFeatureExtractor(do_resize=True, size=480, image_mean=[0.485, 0.456, 0.406], image_std=[0.485, 0.456, 0.406])
+    feature_extractor = ViTFeatureExtractor(do_resize=True, size=224, image_mean=[0.485, 0.456, 0.406], image_std=[0.485, 0.456, 0.406])
     img = feature_extractor(images=image, return_tensors="pt").pixel_values # we remove the batch dimension, is added later on
 
     outputs = model(pixel_values=img, output_attentions=True)
