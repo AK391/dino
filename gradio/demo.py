@@ -19,7 +19,9 @@ torch.hub.download_url_to_file('https://cdn.pixabay.com/photo/2016/12/13/00/13/r
 
 
 # let's use the small DeiT model trained with a patch size of 8
-model = ViTModel.from_pretrained("nielsr/dino_deits8", add_pooling_layer=False)
+# model = ViTModel.from_pretrained("nielsr/dino_deits8", add_pooling_layer=False)
+model = torch.hub.load('facebookresearch/dino:main', 'dino_vits16')
+
 
 def apply_mask(image, mask, color, alpha=0.5):
     for c in range(3):
@@ -82,7 +84,7 @@ def display_instances(image, mask, fname="test", figsize=(5, 5), blur=False, con
 
 def visualize(image):
     image = image.convert("RGB")
-    feature_extractor = ViTFeatureExtractor(do_resize=True, size=224, image_mean=[0.485, 0.456, 0.406], image_std=[0.485, 0.456, 0.406])
+    feature_extractor = ViTFeatureExtractor(do_resize=True, size=512, image_mean=[0.485, 0.456, 0.406], image_std=[0.485, 0.456, 0.406])
     img = feature_extractor(images=image, return_tensors="pt").pixel_values # we remove the batch dimension, is added later on
 
     outputs = model(pixel_values=img, output_attentions=True)
